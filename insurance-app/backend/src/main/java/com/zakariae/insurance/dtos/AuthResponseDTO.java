@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 public class AuthResponseDTO {
     private String token;
+    @Builder.Default
     private String tokenType = "Bearer";
     private String username;
     private String email;

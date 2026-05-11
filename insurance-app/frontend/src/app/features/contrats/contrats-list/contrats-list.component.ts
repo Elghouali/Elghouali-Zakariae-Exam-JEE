@@ -12,13 +12,13 @@ import { Contrat, Client, TypeContrat } from '../../../core/models';
   template: `
     <div class="page-container">
       <div class="page-header">
-        <h1>📄 Gestion des Contrats</h1>
+        <h1><span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 28px; color: var(--accent-color); margin-right: 8px;">description</span>Gestion des Contrats</h1>
         <div class="header-actions">
           <select [(ngModel)]="filterType" (change)="filterContrats()">
             <option value="">Tous les types</option>
-            <option value="AUTOMOBILE">🚗 Automobile</option>
-            <option value="HABITATION">🏠 Habitation</option>
-            <option value="SANTE">💊 Santé</option>
+            <option value="AUTOMOBILE">Automobile</option>
+            <option value="HABITATION">Habitation</option>
+            <option value="SANTE">Santé</option>
           </select>
           <select [(ngModel)]="filterStatut" (change)="filterContrats()">
             <option value="">Tous les statuts</option>
@@ -26,7 +26,7 @@ import { Contrat, Client, TypeContrat } from '../../../core/models';
             <option value="VALIDE">Validé</option>
             <option value="RESILIE">Résilié</option>
           </select>
-          <button class="btn-add" (click)="showForm = !showForm">+ Nouveau Contrat</button>
+          <button class="btn-add" (click)="showForm = !showForm"><span class="material-symbols-rounded icon-small">add</span> Nouveau Contrat</button>
         </div>
       </div>
 
@@ -117,7 +117,7 @@ import { Contrat, Client, TypeContrat } from '../../../core/models';
           </ng-container>
         </div>
         <div class="form-actions">
-          <button class="btn-save" (click)="saveContrat()">💾 Créer le contrat</button>
+          <button class="btn-save" (click)="saveContrat()">Créer le contrat</button>
           <button class="btn-cancel" (click)="showForm = false">Annuler</button>
         </div>
       </div>
@@ -134,15 +134,22 @@ import { Contrat, Client, TypeContrat } from '../../../core/models';
           <tbody>
             <tr *ngFor="let c of filteredContrats">
               <td><span class="id-badge">{{ c.id }}</span></td>
-              <td><span class="type-badge" [class]="c.typeContrat?.toLowerCase()">{{ typeIcon(c.typeContrat!) }} {{ c.typeContrat }}</span></td>
+              <td>
+                <span class="type-badge" [class]="c.typeContrat?.toLowerCase()">
+                  <span class="material-symbols-rounded icon-badge" *ngIf="c.typeContrat === 'AUTOMOBILE'">directions_car</span>
+                  <span class="material-symbols-rounded icon-badge" *ngIf="c.typeContrat === 'HABITATION'">home</span>
+                  <span class="material-symbols-rounded icon-badge" *ngIf="c.typeContrat === 'SANTE'">medical_services</span>
+                  {{ c.typeContrat }}
+                </span>
+              </td>
               <td><strong>{{ c.clientNom }}</strong></td>
               <td>{{ c.dateSouscription | date:'dd/MM/yyyy' }}</td>
               <td><strong>{{ c.montantCotisation | number:'1.2-2' }} MAD</strong></td>
               <td>{{ c.dureeContrat }} mois</td>
               <td><span class="statut-badge" [class]="c.statut?.toLowerCase()">{{ statutLabel(c.statut!) }}</span></td>
               <td class="actions">
-                <button *ngIf="c.statut === 'EN_COURS'" class="btn-valider" (click)="valider(c.id!)">✅ Valider</button>
-                <button *ngIf="c.statut !== 'RESILIE'" class="btn-resilier" (click)="resilier(c.id!)">❌ Résilier</button>
+                <button *ngIf="c.statut === 'EN_COURS'" class="btn-icon btn-valider" (click)="valider(c.id!)" title="Valider"><span class="material-symbols-rounded">check_circle</span></button>
+                <button *ngIf="c.statut !== 'RESILIE'" class="btn-icon btn-resilier" (click)="resilier(c.id!)" title="Résilier"><span class="material-symbols-rounded">cancel</span></button>
               </td>
             </tr>
             <tr *ngIf="filteredContrats.length === 0">
@@ -156,38 +163,46 @@ import { Contrat, Client, TypeContrat } from '../../../core/models';
   styles: [`
     .page-container { padding:24px; max-width:1300px; margin:0 auto; }
     .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px; }
-    h1 { font-size:24px; font-weight:700; margin:0; }
+    h1 { font-size:24px; font-weight:700; margin:0; color:var(--text-main); letter-spacing: -0.5px; }
     .header-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-    select { padding:8px 12px; border:2px solid #e5e7eb; border-radius:6px; outline:none; font-size:14px; }
-    select:focus { border-color:#0d6efd; }
-    .btn-add { background:#0d6efd; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:600; cursor:pointer; white-space:nowrap; }
-    .form-card { background:white; border-radius:12px; padding:24px; margin-bottom:24px; box-shadow:0 2px 12px rgba(0,0,0,0.08); border-top:3px solid #0d6efd; }
-    .form-card h3 { margin:0 0 20px; }
-    .form-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:20px; }
-    .form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#374151; }
-    .form-group input, .form-group select { width:100%; padding:10px 12px; border:2px solid #e5e7eb; border-radius:6px; font-size:14px; outline:none; box-sizing:border-box; }
-    .form-group input:focus, .form-group select:focus { border-color:#0d6efd; }
+    select { padding:10px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); outline:none; font-size:14px; color: var(--text-main); transition: all 0.2s; }
+    select:focus { border-color:var(--accent-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+    .btn-add { background:var(--accent-color); color:white; border:none; padding:10px 20px; border-radius:var(--radius-md); font-weight:600; cursor:pointer; white-space:nowrap; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+    .btn-add:hover { background: var(--accent-hover); }
+    .icon-small { font-size: 20px; }
+    .form-card { background:white; border-radius:var(--radius-lg); padding:24px; margin-bottom:24px; box-shadow:var(--shadow-sm); border:1px solid var(--border-color); border-top:3px solid var(--accent-color); }
+    .form-card h3 { margin:0 0 20px; font-size: 18px; color: var(--text-main); font-weight: 600; }
+    .form-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+    .form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:8px; color:var(--text-main); }
+    .form-group input, .form-group select { width:100%; padding:12px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); font-size:14px; outline:none; box-sizing:border-box; transition: all 0.2s; }
+    .form-group input:focus, .form-group select:focus { border-color:var(--accent-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
     .form-actions { display:flex; gap:12px; }
-    .btn-save { background:#198754; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:600; }
-    .btn-cancel { background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; }
-    .table-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+    .btn-save { background:var(--success-color); color:white; border:none; padding:10px 24px; border-radius:var(--radius-md); cursor:pointer; font-weight:600; transition: opacity 0.2s; }
+    .btn-save:hover { opacity: 0.9; }
+    .btn-cancel { background:white; color:var(--text-muted); border:1px solid var(--border-color); padding:10px 24px; border-radius:var(--radius-md); cursor:pointer; font-weight: 500; transition: all 0.2s; }
+    .btn-cancel:hover { background: var(--bg-color); color: var(--text-main); }
+    .table-card { background:white; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); border: 1px solid var(--border-color); }
     table { width:100%; border-collapse:collapse; }
-    thead { background:#f8f9fa; }
-    th { padding:14px 12px; text-align:left; font-size:12px; font-weight:600; color:#6c757d; text-transform:uppercase; }
-    td { padding:12px; border-top:1px solid #f1f3f4; font-size:14px; vertical-align:middle; }
-    .id-badge { background:#e9ecef; padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600; }
-    .type-badge { padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-    .type-badge.automobile { background:#dbeafe; color:#1d4ed8; }
-    .type-badge.habitation { background:#dcfce7; color:#15803d; }
-    .type-badge.sante { background:#fff1f2; color:#be185d; }
+    thead { background:var(--bg-color); border-bottom: 1px solid var(--border-color); }
+    th { padding:16px; text-align:left; font-size:12px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing: 0.5px; }
+    td { padding:16px; border-bottom:1px solid var(--border-color); font-size:14px; color: var(--text-main); vertical-align:middle; }
+    tbody tr:last-child td { border-bottom: none; }
+    .id-badge { background:var(--bg-color); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600; color: var(--text-muted); border: 1px solid var(--border-color); }
+    .type-badge { display: inline-flex; align-items: center; gap: 4px; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; }
+    .icon-badge { font-size: 16px; }
+    .type-badge.automobile { background:#eff6ff; color:#1d4ed8; }
+    .type-badge.habitation { background:#f0fdf4; color:#15803d; }
+    .type-badge.sante { background:#fef2f2; color:#b91c1c; }
     .statut-badge { padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-    .statut-badge.en_cours { background:#fef3c7; color:#d97706; }
-    .statut-badge.valide { background:#dcfce7; color:#15803d; }
-    .statut-badge.resilie { background:#fee2e2; color:#b91c1c; }
-    .actions { display:flex; gap:6px; }
-    .btn-valider { background:#198754; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px; }
-    .btn-resilier { background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:12px; }
-    .empty-row { text-align:center; color:#adb5bd; padding:40px !important; }
+    .statut-badge.en_cours { background:#eff6ff; color:#1d4ed8; }
+    .statut-badge.valide { background:#f0fdf4; color:#15803d; }
+    .statut-badge.resilie { background:#fef2f2; color:#b91c1c; }
+    .actions { display:flex; gap:8px; align-items: center; }
+    .btn-icon { background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-md); transition: all 0.2s; color: var(--text-muted); }
+    .btn-icon .material-symbols-rounded { font-size: 20px; }
+    .btn-valider:hover { background: #f0fdf4; color: var(--success-color); }
+    .btn-resilier:hover { background: #fef2f2; color: var(--danger-color); }
+    .empty-row { text-align:center; color:var(--text-muted); padding:48px !important; }
     tr:hover td { background:#fafafa; }
   `]
 })
@@ -229,7 +244,13 @@ export class ContratsListComponent implements OnInit {
     if (type === 'AUTOMOBILE') obs = this.contratService.createAutomobile(this.newContrat);
     else if (type === 'HABITATION') obs = this.contratService.createHabitation(this.newContrat);
     else obs = this.contratService.createSante(this.newContrat);
-    obs.subscribe(() => { this.loadContrats(); this.showForm = false; this.newContrat = { typeContrat: '', clientId: 0, dateSouscription: '', montantCotisation: 0, dureeContrat: 12, tauxCouverture: 80 }; });
+    (obs as any).subscribe({
+      next: () => {
+        this.loadContrats();
+        this.showForm = false;
+      },
+      error: (err: any) => console.error(err),
+    });
   }
 
   valider(id: number): void {
@@ -240,10 +261,6 @@ export class ContratsListComponent implements OnInit {
     if (confirm('Résilier ce contrat ?')) {
       this.contratService.resilier(id).subscribe(() => this.loadContrats());
     }
-  }
-
-  typeIcon(type: string): string {
-    return { AUTOMOBILE: '🚗', HABITATION: '🏠', SANTE: '💊' }[type] || '📄';
   }
 
   statutLabel(s: string): string {

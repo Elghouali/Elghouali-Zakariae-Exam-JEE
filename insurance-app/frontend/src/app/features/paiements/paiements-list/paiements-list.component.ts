@@ -13,8 +13,8 @@ import { ContratService } from '../../../core/services/contrat.service';
   template: `
     <div class="page-container">
       <div class="page-header">
-        <h1>💳 Gestion des Paiements</h1>
-        <button class="btn-add" (click)="showForm = !showForm">+ Nouveau Paiement</button>
+        <h1><span class="material-symbols-rounded" style="vertical-align: bottom; font-size: 28px; color: var(--accent-color); margin-right: 8px;">payments</span>Gestion des Paiements</h1>
+        <button class="btn-add" (click)="showForm = !showForm"><span class="material-symbols-rounded icon-small">add</span> Nouveau Paiement</button>
       </div>
 
       <div class="form-card" *ngIf="showForm">
@@ -47,7 +47,7 @@ import { ContratService } from '../../../core/services/contrat.service';
           </div>
         </div>
         <div class="form-actions">
-          <button class="btn-save" (click)="savePaiement()">💾 Enregistrer</button>
+          <button class="btn-save" (click)="savePaiement()">Enregistrer</button>
           <button class="btn-cancel" (click)="showForm = false">Annuler</button>
         </div>
       </div>
@@ -63,7 +63,7 @@ import { ContratService } from '../../../core/services/contrat.service';
               <td>Contrat #{{ p.contratId }}</td>
               <td>{{ p.date | date:'dd/MM/yyyy' }}</td>
               <td><strong>{{ p.montant | number:'1.2-2' }} MAD</strong></td>
-              <td><span class="type-badge" [class]="p.type?.toLowerCase()">{{ typeLabel(p.type!) }}</span></td>
+              <td><span class="type-badge" [class]="p.type.toLowerCase()">{{ typeLabel(p.type) }}</span></td>
             </tr>
             <tr *ngIf="paiements.length === 0">
               <td colspan="5" class="empty-row">Aucun paiement trouvé</td>
@@ -76,26 +76,34 @@ import { ContratService } from '../../../core/services/contrat.service';
   styles: [`
     .page-container { padding:24px; max-width:1100px; margin:0 auto; }
     .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
-    h1 { font-size:24px; font-weight:700; margin:0; }
-    .btn-add { background:#0d6efd; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:600; cursor:pointer; }
-    .form-card { background:white; border-radius:12px; padding:24px; margin-bottom:24px; box-shadow:0 2px 12px rgba(0,0,0,0.08); border-top:3px solid #198754; }
-    .form-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:20px; }
-    .form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
-    .form-group input, .form-group select { width:100%; padding:10px 12px; border:2px solid #e5e7eb; border-radius:6px; font-size:14px; outline:none; box-sizing:border-box; }
+    h1 { font-size:24px; font-weight:700; margin:0; color:var(--text-main); letter-spacing: -0.5px; }
+    .btn-add { background:var(--accent-color); color:white; border:none; padding:10px 20px; border-radius:var(--radius-md); font-weight:600; cursor:pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+    .btn-add:hover { background: var(--accent-hover); }
+    .icon-small { font-size: 20px; }
+    .form-card { background:white; border-radius:var(--radius-lg); padding:24px; margin-bottom:24px; box-shadow:var(--shadow-sm); border:1px solid var(--border-color); border-top:3px solid var(--accent-color); }
+    .form-card h3 { margin:0 0 20px; font-size: 18px; color: var(--text-main); font-weight: 600; }
+    .form-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+    .form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:8px; color:var(--text-main); }
+    .form-group input, .form-group select { width:100%; padding:12px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); font-size:14px; outline:none; box-sizing:border-box; transition: all 0.2s; }
+    .form-group input:focus, .form-group select:focus { border-color:var(--accent-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
     .form-actions { display:flex; gap:12px; }
-    .btn-save { background:#198754; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:600; }
-    .btn-cancel { background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; }
-    .table-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+    .btn-save { background:var(--success-color); color:white; border:none; padding:10px 24px; border-radius:var(--radius-md); cursor:pointer; font-weight:600; transition: opacity 0.2s; }
+    .btn-save:hover { opacity: 0.9; }
+    .btn-cancel { background:white; color:var(--text-muted); border:1px solid var(--border-color); padding:10px 24px; border-radius:var(--radius-md); cursor:pointer; font-weight: 500; transition: all 0.2s; }
+    .btn-cancel:hover { background: var(--bg-color); color: var(--text-main); }
+    .table-card { background:white; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); border: 1px solid var(--border-color); }
     table { width:100%; border-collapse:collapse; }
-    thead { background:#f8f9fa; }
-    th { padding:14px 12px; text-align:left; font-size:12px; font-weight:600; color:#6c757d; text-transform:uppercase; }
-    td { padding:14px 12px; border-top:1px solid #f1f3f4; font-size:14px; }
-    .id-badge { background:#e9ecef; padding:2px 8px; border-radius:4px; font-size:12px; font-weight:600; }
+    thead { background:var(--bg-color); border-bottom: 1px solid var(--border-color); }
+    th { padding:16px; text-align:left; font-size:12px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing: 0.5px; }
+    td { padding:16px; border-bottom:1px solid var(--border-color); font-size:14px; color: var(--text-main); }
+    tbody tr:last-child td { border-bottom: none; }
+    .id-badge { background:var(--bg-color); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600; color: var(--text-muted); border: 1px solid var(--border-color); }
     .type-badge { padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; }
-    .type-badge.mensualite { background:#dbeafe; color:#1d4ed8; }
-    .type-badge.paiement_annuel { background:#dcfce7; color:#15803d; }
-    .type-badge.paiement_exceptionnel { background:#fef3c7; color:#d97706; }
-    .empty-row { text-align:center; color:#adb5bd; padding:40px !important; }
+    .type-badge.mensualite { background:#eff6ff; color:#1d4ed8; }
+    .type-badge.paiement_annuel { background:#f0fdf4; color:#15803d; }
+    .type-badge.paiement_exceptionnel { background:#fff7ed; color:#c2410c; }
+    .empty-row { text-align:center; color:var(--text-muted); padding:48px !important; }
+    tr:hover td { background:#fafafa; }
   `]
 })
 export class PaiementsListComponent implements OnInit {

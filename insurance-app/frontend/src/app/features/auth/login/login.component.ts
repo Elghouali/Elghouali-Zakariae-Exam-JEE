@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="auth-container">
       <div class="auth-card">
         <div class="auth-header">
-          <div class="logo">🛡️</div>
+          <div class="logo"><span class="material-symbols-rounded" style="font-size: 48px; color: var(--accent-color);">admin_panel_settings</span></div>
           <h1>AssuranceMS</h1>
           <p>Connectez-vous à votre espace</p>
         </div>
@@ -41,23 +41,23 @@ import { AuthService } from '../../../core/services/auth.service';
     </div>
   `,
   styles: [`
-    .auth-container { display:flex; justify-content:center; align-items:center; min-height:100vh; background: linear-gradient(135deg, #1a3a5c 0%, #0d6efd 100%); }
-    .auth-card { background:white; border-radius:16px; padding:40px; width:100%; max-width:420px; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    .auth-container { display:flex; justify-content:center; align-items:center; min-height:100vh; background: var(--bg-color); }
+    .auth-card { background:white; border-radius:var(--radius-xl); padding:40px; width:100%; max-width:420px; box-shadow:var(--shadow-lg); border: 1px solid var(--border-color); }
     .auth-header { text-align:center; margin-bottom:32px; }
-    .logo { font-size:48px; margin-bottom:8px; }
-    h1 { font-size:24px; font-weight:700; color:#1a3a5c; margin:0; }
-    .auth-header p { color:#6c757d; margin-top:4px; }
+    .logo { margin-bottom:16px; }
+    h1 { font-size:24px; font-weight:700; color:var(--text-main); margin:0; letter-spacing: -0.5px; }
+    .auth-header p { color:var(--text-muted); margin-top:8px; font-size: 15px; }
     .form-group { margin-bottom:20px; }
-    label { display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px; }
-    input { width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
-    input:focus { border-color:#0d6efd; }
-    .error { font-size:12px; color:#dc3545; margin-top:4px; display:block; }
-    .error-msg { background:#fff5f5; color:#dc3545; padding:10px; border-radius:6px; margin-bottom:16px; font-size:14px; }
-    .btn-primary { width:100%; padding:14px; background:#0d6efd; color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:background 0.2s; }
-    .btn-primary:hover:not(:disabled) { background:#0b5ed7; }
+    label { display:block; font-size:14px; font-weight:600; color:var(--text-main); margin-bottom:8px; }
+    input { width:100%; padding:12px 16px; border:1px solid var(--border-color); border-radius:var(--radius-md); font-size:15px; outline:none; transition:all 0.2s; box-sizing:border-box; color: var(--text-main); }
+    input:focus { border-color:var(--accent-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+    .error { font-size:12px; color:var(--danger-color); margin-top:6px; display:block; }
+    .error-msg { background:#fef2f2; color:var(--danger-color); padding:12px; border-radius:var(--radius-md); margin-bottom:20px; font-size:14px; border: 1px solid #fecaca; }
+    .btn-primary { width:100%; padding:14px; background:var(--accent-color); color:white; border:none; border-radius:var(--radius-md); font-size:16px; font-weight:600; cursor:pointer; transition:background 0.2s; box-shadow: var(--shadow-sm); }
+    .btn-primary:hover:not(:disabled) { background:var(--accent-hover); }
     .btn-primary:disabled { opacity:0.7; cursor:not-allowed; }
-    .demo-hints { margin-top:24px; padding:12px; background:#f8f9fa; border-radius:8px; font-size:13px; text-align:center; color:#6c757d; }
-    .demo-hints strong { color:#495057; }
+    .demo-hints { margin-top:32px; padding:16px; background:var(--bg-color); border-radius:var(--radius-md); font-size:13px; text-align:center; color:var(--text-muted); border: 1px solid var(--border-color); }
+    .demo-hints strong { color:var(--text-main); display: block; margin-bottom: 8px; }
   `]
 })
 export class LoginComponent {

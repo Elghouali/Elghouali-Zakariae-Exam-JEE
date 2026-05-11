@@ -12,21 +12,21 @@ import { AuthService } from './core/services/auth.service';
       <!-- Sidebar -->
       <aside class="sidebar" *ngIf="isAuth">
         <div class="sidebar-header">
-          <span class="logo-icon">🛡️</span>
+          <span class="logo-icon material-symbols-rounded">admin_panel_settings</span>
           <span class="logo-text">AssuranceMS</span>
         </div>
         <nav class="sidebar-nav">
           <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">📊</span><span>Tableau de bord</span>
+            <span class="nav-icon material-symbols-rounded">dashboard</span><span>Tableau de bord</span>
           </a>
           <a routerLink="/clients" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">👥</span><span>Clients</span>
+            <span class="nav-icon material-symbols-rounded">group</span><span>Clients</span>
           </a>
           <a routerLink="/contrats" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">📄</span><span>Contrats</span>
+            <span class="nav-icon material-symbols-rounded">description</span><span>Contrats</span>
           </a>
           <a routerLink="/paiements" routerLinkActive="active" class="nav-item">
-            <span class="nav-icon">💳</span><span>Paiements</span>
+            <span class="nav-icon material-symbols-rounded">payments</span><span>Paiements</span>
           </a>
         </nav>
         <div class="sidebar-footer">
@@ -57,16 +57,15 @@ import { AuthService } from './core/services/auth.service';
       .app-layout {
         display: flex;
         min-height: 100vh;
-        background: #f4f6f9;
-        font-family: 'Segoe UI', sans-serif;
+        background: var(--bg-color);
       }
       .app-layout:not(.authenticated) .main-content {
         width: 100%;
       }
       .sidebar {
-        width: 240px;
+        width: 250px;
         min-height: 100vh;
-        background: #1a3a5c;
+        background: var(--primary-color);
         color: white;
         display: flex;
         flex-direction: column;
@@ -74,42 +73,50 @@ import { AuthService } from './core/services/auth.service';
         top: 0;
         left: 0;
         z-index: 100;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.05);
       }
       .sidebar-header {
-        padding: 24px 20px;
+        padding: 24px;
         display: flex;
         align-items: center;
         gap: 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
       .logo-icon {
         font-size: 28px;
+        color: var(--accent-color);
       }
       .logo-text {
         font-size: 18px;
         font-weight: 700;
+        letter-spacing: -0.5px;
       }
       .sidebar-nav {
         flex: 1;
-        padding: 16px 0;
+        padding: 24px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
       }
       .nav-item {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 12px 20px;
-        color: rgba(255, 255, 255, 0.75);
+        padding: 12px 24px;
+        color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         transition: all 0.2s;
+        font-weight: 500;
+        font-size: 14px;
       }
       .nav-item:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
         color: white;
       }
       .nav-item.active {
-        background: rgba(13, 110, 253, 0.6);
+        background: rgba(255, 255, 255, 0.1);
         color: white;
-        border-right: 3px solid #66aaff;
+        border-right: 3px solid var(--accent-color);
       }
       .nav-icon {
         font-size: 18px;
@@ -144,25 +151,26 @@ import { AuthService } from './core/services/auth.service';
       }
       .logout-btn {
         width: 100%;
-        padding: 8px;
-        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
         color: white;
-        border: none;
-        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
         cursor: pointer;
         font-size: 13px;
-        transition: background 0.2s;
+        font-weight: 500;
+        transition: all 0.2s;
       }
       .logout-btn:hover {
         background: rgba(220, 53, 69, 0.7);
       }
       .main-content {
         flex: 1;
-        margin-left: 240px;
+        margin-left: 250px;
         min-height: 100vh;
       }
       .authenticated .main-content {
-        margin-left: 240px;
+        margin-left: 250px;
       }
       :not(.authenticated) .main-content {
         margin-left: 0;
