@@ -1,10 +1,10 @@
-# 🛡️ AssuranceMS — Application de Gestion des Contrats d'Assurance
+#  AssuranceMS — Application de Gestion des Contrats d'Assurance
 
 > **Zakariae** — Projet JEE Spring Boot + Angular
 
 ---
 
-## 🏗️ Architecture Technique
+##  Architecture Technique
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -36,7 +36,7 @@
 └─────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Lancer l'application
+##  Lancer l'application
 
 ### Backend (Spring Boot)
 ```bash
@@ -57,7 +57,7 @@ ng serve
 
 ---
 
-## 👤 Comptes de démonstration
+##  Comptes de démonstration
 
 | Utilisateur | Mot de passe | Rôle |
 |---|---|---|
@@ -67,7 +67,7 @@ ng serve
 
 ---
 
-## 🔐 Autorisations par rôle
+##  Autorisations par rôle
 
 | Action | ROLE_CLIENT | ROLE_EMPLOYE | ROLE_ADMIN |
 |---|---|---|---|
@@ -79,7 +79,7 @@ ng serve
 
 ---
 
-## 📦 Structure du projet
+##  Structure du projet
 
 ```
 insurance-app/
@@ -108,7 +108,7 @@ insurance-app/
             └── paiements/       # Gestion paiements
 ```
 
-## 📊 Diagramme de classes (entités)
+##  Diagramme de classes (entités)
 
 ```
 Client
@@ -163,7 +163,7 @@ AppRole
   - roleName: String
 ```
 
-## 🛠️ Technologies utilisées
+##  Technologies utilisées
 
 ### Backend
 - Java 17 + Spring Boot 3.2
