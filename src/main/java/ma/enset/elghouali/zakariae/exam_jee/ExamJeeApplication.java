@@ -3,15 +3,18 @@ package ma.enset.elghouali.zakariae.exam_jee;
 import ma.enset.elghouali.zakariae.exam_jee.entities.*;
 import ma.enset.elghouali.zakariae.exam_jee.enums.*;
 import ma.enset.elghouali.zakariae.exam_jee.repositories.*;
+import ma.enset.elghouali.zakariae.exam_jee.security.RsaKeysConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 import java.time.LocalDate;
 
 @SpringBootApplication
+@EnableConfigurationProperties(RsaKeysConfig.class)
 public class ExamJeeApplication {
 
 	public static void main(String[] args) {

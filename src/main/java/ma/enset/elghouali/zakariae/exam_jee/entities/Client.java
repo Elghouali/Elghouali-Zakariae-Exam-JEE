@@ -2,7 +2,6 @@ package ma.enset.elghouali.zakariae.exam_jee.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.List;
 

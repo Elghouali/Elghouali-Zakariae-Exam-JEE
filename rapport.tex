@@ -1,0 +1,858 @@
+\documentclass[12pt,a4paper]{report}
+
+% ── Encodage & langue ──────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% ── Mise en page ───────────────────────────────────────────────────────────────
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ── Graphiques & couleurs ──────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{ensetBlue}{RGB}{0,70,127}
+\definecolor{lightGray}{RGB}{245,245,245}
+\definecolor{commentGreen}{RGB}{80,161,79}
+\definecolor{keywordBlue}{RGB}{86,156,214}
+\definecolor{stringOrange}{RGB}{206,145,120}
+
+% ── Hyperliens ─────────────────────────────────────────────────────────────────
+\usepackage[colorlinks=true, linkcolor=ensetBlue, urlcolor=ensetBlue]{hyperref}
+
+% ── Listings (code source) ─────────────────────────────────────────────────────
+\usepackage{listings}
+\lstdefinestyle{javaStyle}{
+    backgroundcolor=\color{lightGray},
+    commentstyle=\color{commentGreen}\itshape,
+    keywordstyle=\color{keywordBlue}\bfseries,
+    stringstyle=\color{stringOrange},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=8pt,
+    numberstyle=\tiny\color{gray},
+    showstringspaces=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{gray!40},
+    xleftmargin=15pt,
+}
+\lstdefinestyle{propertiesStyle}{
+    backgroundcolor=\color{lightGray},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{gray!40},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt,
+    xleftmargin=15pt,
+    commentstyle=\color{commentGreen},
+    morecomment=[l]{\#},
+}
+\lstset{style=javaStyle}
+
+% ── Tableaux ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+
+% ── Boites & titres ────────────────────────────────────────────────────────────
+\usepackage{mdframed}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{titlesec}
+
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries\color{ensetBlue}}
+  {\thechapter.}{12pt}{}
+\titlespacing*{\chapter}{0pt}{10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{ensetBlue}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}{1em}{}
+
+% ── Diagrammes ─────────────────────────────────────────────────────────────────
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
+
+% ── Icones statut ─────────────────────────────────────────────────────────────
+\usepackage{amssymb}
+\newcommand{\OK}{\textcolor{green!60!black}{$\checkmark$}}
+\newcommand{\WARN}{\textcolor{orange}{$\triangle$}}
+\newcommand{\ERR}{\textcolor{red}{$\times$}}
+
+% ── En-tete / pied de page ────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{gray}{Rapport Technique -- Examen Rattrapage AD ENSET 2026}}
+\fancyhead[R]{\small\textcolor{gray}{EL GHOUALI Zakariae}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ==============================================================================
+\begin{document}
+
+% ── Page de garde ─────────────────────────────────────────────────────────────
+\begin{titlepage}
+\begin{center}
+    \vspace*{1cm}
+
+    {\large\textbf{Ecole Nationale Superieure de l'Enseignement Technique}}\\[0.3cm]
+    {\large ENSET -- Mohammedia}\\[0.3cm]
+    {\large Filiere : Genie Logiciel / Architecture Distribuee}
+
+    \vspace{1.5cm}
+    \rule{\linewidth}{1.5pt}\\[0.4cm]
+    {\Huge\bfseries\color{ensetBlue} Rapport Technique}\\[0.3cm]
+    {\LARGE Examen de Rattrapage}\\[0.2cm]
+    {\Large Architecture Distribuee -- JEE}\\[0.3cm]
+    \rule{\linewidth}{1.5pt}
+
+    \vspace{1.5cm}
+
+    \begin{tcolorbox}[colback=ensetBlue!8, colframe=ensetBlue,
+                      title=Contexte du projet, fonttitle=\bfseries]
+        Application de gestion de credits bancaires developpee avec\\
+        \textbf{Spring Boot 3.x}, \textbf{Spring Security (JWT/RSA)},\\
+        \textbf{Spring Data JPA}, \textbf{H2} et \textbf{OpenAPI/Swagger}.
+    \end{tcolorbox}
+
+    \vspace{2cm}
+
+    \begin{tabular}{rl}
+        \textbf{Etudiant :}   & EL GHOUALI Zakariae \\[4pt]
+        \textbf{Email :}      & zakariaelgouali@gmail.com \\[4pt]
+        \textbf{Module :}     & Architecture Distribuee / JEE \\[4pt]
+        \textbf{Session :}    & Rattrapage 2025--2026 \\[4pt]
+        \textbf{Date :}       & \today \\
+    \end{tabular}
+
+    \vfill
+    {\small Rapport technique -- Examen de rattrapage Architecture Distribuee ENSET 2026}
+\end{center}
+\end{titlepage}
+
+% ── Table des matieres ────────────────────────────────────────────────────────
+\tableofcontents
+\newpage
+
+% ==============================================================================
+\chapter{Introduction et Presentation du Sujet}
+
+\section{Contexte}
+
+Cet examen de rattrapage porte sur le developpement d'une application web
+backend de \textbf{gestion de credits bancaires}. Le projet met en oeuvre les
+principes d'une architecture distribuee JEE en utilisant l'ecosysteme Spring
+Boot.
+
+L'objectif est de concevoir et implementer une API REST securisee permettant de :
+\begin{itemize}
+    \item Gerer des \textbf{clients} d'une banque et leurs credits associes ;
+    \item Gerer trois types de \textbf{credits} : personnel, immobilier et
+          professionnel ;
+    \item Enregistrer et consulter les \textbf{remboursements} lies a chaque
+          credit ;
+    \item Securiser l'ensemble des endpoints via \textbf{JWT} signe avec une
+          paire de cles \textbf{RSA}.
+\end{itemize}
+
+\section{Environnement Technique}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\linewidth}{l X}
+\toprule
+\textbf{Technologie}         & \textbf{Role / Version} \\
+\midrule
+Java 21                      & Langage de programmation principal \\
+Spring Boot 3.5.x            & Framework applicatif \\
+Spring Data JPA              & Couche de persistance (ORM) \\
+H2 Database                  & Base de donnees en memoire (developpement) \\
+Spring Security              & Authentification et autorisation \\
+OAuth2 Resource Server       & Validation des tokens JWT \\
+Nimbus JOSE + JWT            & Encodage/decodage JWT (RSA 2048) \\
+Lombok                       & Reduction du code boilerplate \\
+SpringDoc OpenAPI 2.5        & Documentation Swagger UI \\
+Maven                        & Outil de build et gestion des dependances \\
+\bottomrule
+\end{tabularx}
+\caption{Stack technique du projet}
+\end{table}
+
+% ==============================================================================
+\chapter{Architecture Globale}
+
+\section{Vue d'ensemble en couches}
+
+L'application suit une \textbf{architecture en couches} classique des
+applications Spring Boot :
+
+\begin{center}
+\begin{tikzpicture}[
+    layer/.style={draw=ensetBlue, fill=ensetBlue!10, rounded corners=4pt,
+                  minimum width=10cm, minimum height=1cm, font=\bfseries},
+    arrow/.style={-Stealth, thick, color=ensetBlue}
+]
+\node[layer, fill=orange!15, draw=orange] (sec)
+    at (0, 1.6) {Couche Securite (Spring Security + JWT/RSA)};
+\node[layer] (web)
+    at (0, 0)   {Couche Web (REST Controllers)};
+\node[layer] (service)
+    at (0,-1.6) {Couche Service (Logique metier)};
+\node[layer] (repo)
+    at (0,-3.2) {Couche Repository (Spring Data JPA)};
+\node[layer] (db)
+    at (0,-4.8) {Base de donnees H2 (in-memory)};
+
+\draw[arrow] (sec)     -- (web);
+\draw[arrow] (web)     -- (service);
+\draw[arrow] (service) -- (repo);
+\draw[arrow] (repo)    -- (db);
+\end{tikzpicture}
+\end{center}
+
+\section{Structure des packages}
+
+\begin{verbatim}
+ma.enset.elghouali.zakariae.exam_jee/
+|-- ExamJeeApplication.java        (point d'entree + donnees de test)
+|-- entities/
+|   |-- Client.java
+|   |-- Credit.java                (classe mere, SINGLE_TABLE)
+|   |-- CreditPersonnel.java
+|   |-- CreditImmobilier.java
+|   |-- CreditProfessionnel.java
+|   `-- Remboursement.java
+|-- enums/
+|   |-- StatutCredit.java
+|   |-- TypeBien.java
+|   `-- TypeRemboursement.java
+|-- repositories/
+|   |-- ClientRepository.java
+|   |-- CreditRepository.java
+|   `-- RemboursementRepository.java
+|-- dtos/
+|   |-- ClientDTO.java
+|   |-- CreditDTO.java
+|   `-- RemboursementDTO.java
+|-- mappers/
+|   `-- ExamMapper.java
+|-- services/
+|   |-- CreditService.java         (interface)
+|   `-- CreditServiceImpl.java
+|-- web/
+|   |-- CreditRestController.java
+|   `-- AuthController.java
+`-- security/
+    |-- SecurityConfig.java
+    |-- RsaKeysConfig.java
+    `-- PasswordEncoderConfig.java
+\end{verbatim}
+
+% ==============================================================================
+\chapter{Modele de Donnees}
+
+\section{Entites JPA}
+
+\subsection{Client}
+
+\begin{lstlisting}[language=Java, caption={Entite Client}]
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Client {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String nom;
+    private String email;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<Credit> credits;
+}
+\end{lstlisting}
+
+\subsection{Credit -- Classe mere avec heritage SINGLE\_TABLE}
+
+\begin{lstlisting}[language=Java, caption={Entite Credit -- heritage SINGLE\_TABLE}]
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE_CREDIT", length = 15)
+@Data @NoArgsConstructor @AllArgsConstructor
+public class Credit {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDate dateDemande;
+    @Enumerated(EnumType.STRING)
+    private StatutCredit statut;
+    private LocalDate dateAcceptation;
+    private Double montant;
+    private Integer dureeRemboursement;
+    private Double tauxInteret;
+    @ManyToOne
+    private Client client;
+    @OneToMany(mappedBy = "credit", fetch = FetchType.LAZY)
+    private List<Remboursement> remboursements;
+}
+\end{lstlisting}
+
+\subsection{Sous-types de credits}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\linewidth}{l l X}
+\toprule
+\textbf{Classe} & \textbf{Discriminateur} & \textbf{Attributs specifiques} \\
+\midrule
+\texttt{CreditPersonnel}
+    & \texttt{PERSONNEL}
+    & \texttt{motif : String} \\
+\texttt{CreditImmobilier}
+    & \texttt{IMMOBILIER}
+    & \texttt{typeBien : TypeBien}
+      (APPARTEMENT, MAISON, LOCAL\_COMMERCIAL) \\
+\texttt{CreditProfessionnel}
+    & \texttt{PROFESSIONNEL}
+    & \texttt{motif : String}, \texttt{raisonSociale : String} \\
+\bottomrule
+\end{tabularx}
+\caption{Sous-types de credits}
+\end{table}
+
+\subsection{Remboursement}
+
+\begin{lstlisting}[language=Java, caption={Entite Remboursement}]
+@Entity
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Remboursement {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDate date;
+    private Double montant;
+    @Enumerated(EnumType.STRING)
+    private TypeRemboursement type;   // MENSUALITE | REMBOURSEMENT_ANTICIPE
+    @ManyToOne
+    private Credit credit;
+}
+\end{lstlisting}
+
+\section{Enumerations du domaine}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\linewidth}{l X}
+\toprule
+\textbf{Enum} & \textbf{Valeurs} \\
+\midrule
+\texttt{StatutCredit}      & EN\_COURS, ACCEPTE, REJETE \\
+\texttt{TypeBien}          & APPARTEMENT, MAISON, LOCAL\_COMMERCIAL \\
+\texttt{TypeRemboursement} & MENSUALITE, REMBOURSEMENT\_ANTICIPE \\
+\bottomrule
+\end{tabularx}
+\caption{Enumerations du domaine}
+\end{table}
+
+\section{Strategie d'heritage et justification}
+
+La strategie \textbf{SINGLE\_TABLE} est choisie : toutes les sous-classes de
+\texttt{Credit} sont stockees dans une unique table avec une colonne discriminante
+\texttt{TYPE\_CREDIT}.
+
+\begin{itemize}
+    \item \textbf{Avantage} : une seule jointure lors des requetes, performances
+          elevees pour ce type de hierarchie peu profonde.
+    \item \textbf{Inconvenient} : les colonnes specifiques a un sous-type sont
+          nullable pour les autres sous-types.
+    \item \textbf{Conclusion} : choix pertinent pour ce contexte d'examen
+          (nombre limite de sous-types, hierarchie simple).
+\end{itemize}
+
+% ==============================================================================
+\chapter{Couche de Persistance}
+
+\section{Repositories Spring Data JPA}
+
+Trois interfaces \texttt{JpaRepository} beneficient automatiquement des
+operations CRUD, de la pagination et du tri :
+
+\begin{itemize}
+    \item \texttt{ClientRepository extends JpaRepository<Client, Integer>}
+    \item \texttt{CreditRepository extends JpaRepository<Credit, Long>}
+    \item \texttt{RemboursementRepository extends JpaRepository<Remboursement, Long>}
+\end{itemize}
+
+\section{Configuration de la base de donnees}
+
+\begin{lstlisting}[style=propertiesStyle, caption={application.properties (version corrigee)}]
+spring.application.name=exam-jee
+
+spring.datasource.url=jdbc:h2:mem:creditdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+rsa.private-key=classpath:certs/private.pem
+rsa.public-key=classpath:certs/public.pem
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=red!8, colframe=red!70,
+                  title={\ERR\ Anomalies detectees dans application.properties}]
+Le fichier original contient trois fautes de frappe bloquantes :
+\begin{enumerate}
+    \item \texttt{spring.datasourc\textbf{ce}.url}
+          $\rightarrow$ double ``c'' ; doit etre \texttt{spring.datasource.url}
+    \item \texttt{spring.datasource.password\textbf{s}}
+          $\rightarrow$ ``s'' superflu ; doit etre \texttt{spring.datasource.password}
+    \item \texttt{spring.\textbf{dpa}.show-sql}
+          $\rightarrow$ inversion ; doit etre \texttt{spring.jpa.show-sql}
+\end{enumerate}
+Ces erreurs empechent le demarrage correct de l'application.
+\end{tcolorbox}
+
+\section{Initialisation des donnees de test}
+
+Le \texttt{CommandLineRunner} dans \texttt{ExamJeeApplication} peuple la base
+au demarrage avec :
+
+\begin{itemize}
+    \item 2 clients : \textit{Hassan} (hassan@gmail.com) et
+          \textit{Amina} (amina@gmail.com) ;
+    \item 1 credit personnel lie a Hassan :
+          50\,000 DH, 48 mois, taux 4.5\%, statut \texttt{ACCEPTE},
+          motif ``Achat Voiture'' ;
+    \item 1 credit immobilier lie a Amina :
+          1\,200\,000 DH, 240 mois, taux 4.2\%, statut \texttt{EN\_COURS},
+          type bien \texttt{APPARTEMENT} ;
+    \item 2 remboursements mensuels (1\,200 DH chacun) lies au credit personnel.
+\end{itemize}
+
+% ==============================================================================
+\chapter{Couche Service et Mapping}
+
+\section{Interface CreditService}
+
+\begin{lstlisting}[language=Java, caption={Interface CreditService}]
+public interface CreditService {
+    List<ClientDTO>  getAllClients();
+    List<CreditDTO>  getCreditsByClient(Long clientId);
+    CreditDTO        getCreditById(Long creditId);
+    RemboursementDTO addRemboursement(RemboursementDTO dto);
+}
+\end{lstlisting}
+
+\section{Implementation CreditServiceImpl}
+
+\begin{lstlisting}[language=Java, caption={Extrait de CreditServiceImpl}]
+@Service @Transactional @AllArgsConstructor
+public class CreditServiceImpl implements CreditService {
+
+    private ClientRepository clientRepository;
+    private CreditRepository creditRepository;
+    private RemboursementRepository remboursementRepository;
+    private ExamMapper mapper;
+
+    @Override
+    public List<CreditDTO> getCreditsByClient(Long clientId) {
+        Client client = clientRepository.findById(clientId)
+            .orElseThrow(() -> new RuntimeException("Client introuvable"));
+        return client.getCredits().stream()
+            .map(mapper::fromCredit)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public RemboursementDTO addRemboursement(RemboursementDTO dto) {
+        Credit credit = creditRepository.findById(dto.getCreditId())
+            .orElseThrow(() -> new RuntimeException("Credit introuvable"));
+        Remboursement r = Remboursement.builder()
+            .date(dto.getDate()).montant(dto.getMontant())
+            .type(dto.getType()).credit(credit).build();
+        return mapper.fromRemboursement(remboursementRepository.save(r));
+    }
+}
+\end{lstlisting}
+
+\section{Mapper ExamMapper}
+
+Le mapper utilise \texttt{BeanUtils.copyProperties} pour les proprietes
+communes, puis determine le type du credit par polymorphisme
+(\texttt{instanceof}) afin de renseigner \texttt{typeCredit} dans le DTO.
+
+\begin{lstlisting}[language=Java, caption={Methode fromCredit du mapper}]
+public CreditDTO fromCredit(Credit credit) {
+    CreditDTO dto = new CreditDTO();
+    BeanUtils.copyProperties(credit, dto);
+    if (credit instanceof CreditPersonnel)
+        dto.setTypeCredit("PERSONNEL");
+    else if (credit instanceof CreditImmobilier)
+        dto.setTypeCredit("IMMOBILIER");
+    else if (credit instanceof CreditProfessionnel)
+        dto.setTypeCredit("PROFESSIONNEL");
+    return dto;
+}
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=orange!10, colframe=orange,
+                  title={\WARN\ Anomalie detectee dans ExamMapper}]
+La valeur retournee pour \texttt{CreditProfessionnel} etait \texttt{"PROFESSION"}
+au lieu de \texttt{"PROFESSIONNEL"} dans le code source. Cela cree une
+incoherence avec la valeur du discriminateur JPA
+(\texttt{@DiscriminatorValue("PROFESSIONNEL")}). La version corrigee est
+presentee ci-dessus.
+\end{tcolorbox}
+
+% ==============================================================================
+\chapter{API REST}
+
+\section{Tableau des endpoints}
+
+\begin{longtable}{l l l p{5.5cm}}
+\toprule
+\textbf{Methode} & \textbf{URL}
+    & \textbf{Auth} & \textbf{Description} \\
+\midrule
+\endhead
+POST & \texttt{/auth/login}                & Non & Authentification et generation du JWT \\
+GET  & \texttt{/api/clients}               & JWT & Liste de tous les clients \\
+GET  & \texttt{/api/clients/\{id\}/credits}& JWT & Credits d'un client \\
+GET  & \texttt{/api/credits/\{id\}}        & JWT & Detail d'un credit par id \\
+POST & \texttt{/api/remboursements}         & JWT & Enregistrement d'un remboursement \\
+\bottomrule
+\caption{Endpoints REST de l'application}
+\end{longtable}
+
+\section{Controleur principal}
+
+\begin{lstlisting}[language=Java, caption={CreditRestController}]
+@RestController
+@RequestMapping("/api")
+@CrossOrigin("*")
+@AllArgsConstructor
+public class CreditRestController {
+
+    private CreditService creditService;
+
+    @GetMapping("/clients")
+    public List<ClientDTO> clients() {
+        return creditService.getAllClients();
+    }
+
+    @GetMapping("/clients/{id}/credits")
+    public List<CreditDTO> creditsByClient(
+            @PathVariable(name = "id") Long clientId) {
+        return creditService.getCreditsByClient(clientId);
+    }
+
+    @GetMapping("/credits/{id}")
+    public CreditDTO getCredit(@PathVariable Long id) {
+        return creditService.getCreditById(id);
+    }
+
+    @PostMapping("/remboursements")
+    public RemboursementDTO saveRemboursement(
+            @RequestBody RemboursementDTO dto) {
+        return creditService.addRemboursement(dto);
+    }
+}
+\end{lstlisting}
+
+\section{Controleur d'authentification}
+
+\begin{lstlisting}[language=Java, caption={AuthController -- generation du JWT}]
+@PostMapping("/auth/login")
+public Map<String, String> login(String username, String password) {
+    // 1. Authentification via AuthenticationManager
+    Authentication auth = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(username, password));
+
+    // 2. Construction du scope (roles)
+    String scope = auth.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.joining(" "));
+
+    // 3. Claims JWT : validite 30 minutes
+    JwtClaimsSet claims = JwtClaimsSet.builder()
+        .issuedAt(Instant.now())
+        .expiresAt(Instant.now().plus(30, ChronoUnit.MINUTES))
+        .subject(username)
+        .claim("scope", scope)
+        .build();
+
+    // 4. Signature RSA et retour
+    String jwt = jwtEncoder
+        .encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    return Map.of("access-token", jwt);
+}
+\end{lstlisting}
+
+% ==============================================================================
+\chapter{Securite}
+
+\section{Architecture de securite}
+
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={draw=ensetBlue, fill=ensetBlue!8, rounded corners=4pt,
+                minimum width=3.2cm, minimum height=1cm,
+                align=center, font=\small},
+    arr/.style={-Stealth, thick, color=ensetBlue}
+]
+\node[box] (client)  at (0, 0)    {Client\\(app / curl)};
+\node[box] (login)   at (5, 1.2)  {POST /auth/login\\username + password};
+\node[box] (tok)     at (10, 1.2) {JWT signe\\RSA 2048};
+\node[box] (api)     at (5, -1.2) {GET /api/**\\Bearer token};
+\node[box] (filter)  at (10,-1.2) {JwtDecoder\\verification RSA};
+
+\draw[arr] (client.east) |- (login.west);
+\draw[arr] (login) -- node[above,font=\tiny]{access-token} (tok);
+\draw[arr] (tok.west) -- (login.east);
+\draw[arr] (client.east) |- (api.west);
+\draw[arr] (api) -- (filter);
+\draw[arr] (filter.east) -- ++(1.2,0) node[right,font=\tiny]{200 OK / 401};
+\end{tikzpicture}
+\end{center}
+
+\section{Configuration Spring Security}
+
+\begin{lstlisting}[language=Java, caption={SecurityConfig -- chaine de filtres}]
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    return http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(
+                "/auth/**", "/swagger-ui.html", "/swagger-ui/**",
+                "/v3/api-docs/**", "/h2-console/**").permitAll())
+        .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+        .sessionManagement(sess ->
+            sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .oauth2ResourceServer(oauth2 ->
+            oauth2.jwt(Customizer.withDefaults()))
+        .build();
+}
+\end{lstlisting}
+
+\section{Utilisateurs en memoire}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\linewidth}{l l l X}
+\toprule
+\textbf{Utilisateur} & \textbf{Mot de passe} & \textbf{Role(s)} & \textbf{Droits} \\
+\midrule
+\texttt{client1}  & 1234 & ROLE\_CLIENT              & Consultation \\
+\texttt{employe1} & 1234 & ROLE\_EMPLOYE             & Gestion remboursements \\
+\texttt{admin}    & 1234 & ROLE\_ADMIN, ROLE\_EMPLOYE & Acces complet \\
+\bottomrule
+\end{tabularx}
+\caption{Utilisateurs InMemoryUserDetailsManager}
+\end{table}
+
+\section{Cles RSA}
+
+Les cles RSA sont generees hors de l'application et placees dans
+\texttt{src/main/resources/certs/} :
+\begin{itemize}
+    \item \texttt{private.pem} -- cle privee RSA 2048 bits (signature des tokens) ;
+    \item \texttt{public.pem}  -- cle publique RSA (verification des tokens).
+\end{itemize}
+La liaison est assuree par le record \texttt{RsaKeysConfig} active via
+\texttt{@EnableConfigurationProperties(RsaKeysConfig.class)}.
+
+% ==============================================================================
+\chapter{Documentation API -- Swagger / OpenAPI}
+
+L'integration de \textbf{SpringDoc OpenAPI 2.5} expose automatiquement :
+\begin{itemize}
+    \item \texttt{/swagger-ui.html} -- interface graphique interactive ;
+    \item \texttt{/v3/api-docs}     -- specification OpenAPI JSON.
+\end{itemize}
+Ces deux URLs sont explicitement autorisees sans authentification dans
+\texttt{SecurityConfig}, ce qui permet de les consulter librement lors du
+developpement.
+
+% ==============================================================================
+\chapter{Analyse Qualite et Points d'Amelioration}
+
+\section{Bilan des anomalies detectees}
+
+\begin{longtable}{l p{4.8cm} p{5cm}}
+\toprule
+\textbf{Severite} & \textbf{Probleme} & \textbf{Correction recommandee} \\
+\midrule
+\endhead
+
+\ERR\ CRITIQUE
+    & 3 fautes de frappe bloquantes dans \texttt{application.properties}
+      (\texttt{datasourcce}, \texttt{passwords}, \texttt{dpa})
+    & Corriger : \texttt{datasource.url}, \texttt{datasource.password},
+      \texttt{jpa.show-sql} \\[6pt]
+
+\WARN\ MOYEN
+    & \texttt{ExamMapper} retourne \texttt{"PROFESSION"} au lieu de
+      \texttt{"PROFESSIONNEL"} pour \texttt{CreditProfessionnel}
+    & Corriger la chaine en \texttt{"PROFESSIONNEL"} \\[6pt]
+
+\WARN\ MOYEN
+    & \texttt{@CrossOrigin("*")} trop permissif (CORS ouvert)
+    & Restreindre aux origines connues en production \\[6pt]
+
+\WARN\ MOYEN
+    & Exceptions generiques \texttt{RuntimeException} dans la couche service
+    & Creer \texttt{ClientNotFoundException}, \texttt{CreditNotFoundException} \\[6pt]
+
+\WARN\ MOYEN
+    & Aucune pagination sur \texttt{/api/clients}
+    & Ajouter \texttt{Pageable} et retourner \texttt{Page<ClientDTO>} \\[6pt]
+
+\WARN\ MINEUR
+    & Les roles definis dans \texttt{SecurityConfig} ne sont pas utilises
+      dans les endpoints via \texttt{@PreAuthorize}
+    & Ajouter \texttt{@PreAuthorize} sur chaque endpoint \\[6pt]
+
+\OK\ INFO
+    & \texttt{FetchType.LAZY} sur toutes les associations
+    & Bonne pratique, evite le N+1 implicite \\[6pt]
+
+\OK\ INFO
+    & SINGLE\_TABLE adapte au nombre de sous-types
+    & Choix pertinent pour ce contexte \\[6pt]
+
+\OK\ INFO
+    & JWT RSA 2048 + duree 30 min
+    & Securite asymetrique correcte \\
+
+\bottomrule
+\caption{Bilan qualite du projet}
+\end{longtable}
+
+\section{Ameliorations suggeries}
+
+\subsection{Gestion centralisee des erreurs}
+
+\begin{lstlisting}[language=Java, caption={GlobalExceptionHandler a ajouter}]
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ClientNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleClientNotFound(
+            ClientNotFoundException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+
+    @ExceptionHandler(CreditNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleCreditNotFound(
+            CreditNotFoundException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+}
+\end{lstlisting}
+
+\subsection{Securite au niveau des methodes}
+
+\begin{lstlisting}[language=Java, caption={Controle par role via @PreAuthorize}]
+@GetMapping("/clients")
+@PreAuthorize("hasRole('EMPLOYE') or hasRole('ADMIN')")
+public List<ClientDTO> clients() { ... }
+
+@PostMapping("/remboursements")
+@PreAuthorize("hasRole('EMPLOYE') or hasRole('ADMIN')")
+public RemboursementDTO saveRemboursement(@RequestBody RemboursementDTO dto)
+    { ... }
+\end{lstlisting}
+
+\subsection{Validation des entrees}
+
+\begin{lstlisting}[language=Java, caption={Validation sur RemboursementDTO}]
+public class RemboursementDTO {
+    @NotNull
+    private LocalDate date;
+    @Positive
+    private Double montant;
+    @NotNull
+    private TypeRemboursement type;
+    @NotNull
+    private Long creditId;
+}
+\end{lstlisting}
+
+% ==============================================================================
+\chapter{Conclusion}
+
+\section{Recapitulatif des realisations}
+
+Ce projet d'examen de rattrapage implemente une application bancaire de gestion
+de credits couvrant l'ensemble des fonctionnalites demandees :
+
+\begin{itemize}
+    \item[\OK] Modelisation JPA complete avec heritage \texttt{SINGLE\_TABLE}
+               (3 types de credits) ;
+    \item[\OK] Couche de persistance Spring Data JPA avec H2 ;
+    \item[\OK] Couche service transactionnelle et mapper manuel ;
+    \item[\OK] API REST documentee avec SpringDoc/OpenAPI ;
+    \item[\OK] Authentification JWT asymetrique RSA 2048 via Spring Security ;
+    \item[\OK] Separation propre en couches
+               (Entity $\to$ Repository $\to$ Service $\to$ Controller) ;
+    \item[\WARN] Fautes de configuration dans \texttt{application.properties}
+                 a corriger ;
+    \item[\WARN] Robustesse a ameliorer : exceptions metier, pagination,
+                 validation, \texttt{@PreAuthorize} ;
+    \item[\ERR] Tests unitaires et d'integration absents.
+\end{itemize}
+
+\section{Competences demontrees}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\linewidth}{X l}
+\toprule
+\textbf{Competence} & \textbf{Statut} \\
+\midrule
+Conception et modelisation JPA / ORM        & \OK\ Maitrisee \\
+Heritage JPA (SINGLE\_TABLE)               & \OK\ Maitrisee \\
+Spring Data JPA (repositories)             & \OK\ Maitrisee \\
+Developpement REST avec Spring MVC         & \OK\ Maitrisee \\
+Securisation JWT / OAuth2 Resource Server  & \OK\ Maitrisee \\
+Cryptographie asymetrique (RSA)            & \OK\ Maitrisee \\
+Pattern DTO + Mapper                       & \OK\ Maitrisee \\
+Documentation API (OpenAPI / Swagger)      & \OK\ Maitrisee \\
+Gestion d'exceptions centralisee           & \WARN\ Partielle \\
+Validation des entrees (\texttt{@Valid})   & \WARN\ Absente \\
+Tests unitaires / integration              & \ERR\ Absents \\
+\bottomrule
+\end{tabularx}
+\caption{Bilan des competences JEE}
+\end{table}
+
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=ensetBlue!8, colframe=ensetBlue,
+                  title={Appreciation globale}]
+Le projet demontre une bonne maitrise de l'ecosysteme Spring Boot et des
+principes d'architecture distribuee JEE. La structure en couches est claire,
+la securisation par JWT/RSA est pertinente et bien configuree. Les anomalies
+relevees (typos de configuration, valeur enum incorrecte, absence de validation
+et de tests) sont des points de perfectionnement courants a ce niveau
+d'etudes.
+\end{tcolorbox}
+
+\end{document}
