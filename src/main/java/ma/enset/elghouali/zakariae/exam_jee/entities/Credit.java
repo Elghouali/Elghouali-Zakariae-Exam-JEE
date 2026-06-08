@@ -13,4 +13,19 @@ import java.util.List;
 public class Credit {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDate dateDemande;
+
+    @Enumerated(EnumType.STRING)
+    private StatutCredit statut;
+
+    private LocalDate dateAcceptation;
+    private Double montant;
+    private Integer dureeRemboursement;
+    private Double tauxInteret;
+
+    @ManyToMany
+    private Client client;
+
+    @OneToMany(mappedBy = "credit", fetch = FetchType.LAZY)
+    private List<Remboursement> remboursements;
 }
