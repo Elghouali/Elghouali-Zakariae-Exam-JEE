@@ -12,7 +12,7 @@ public class Remboursement {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
-    private String montant;
+    private Double montant;
 
     @Enumerated(EnumType.STRING)
     private TypeRemboursement type;
