@@ -11,4 +11,12 @@ public class RemboursementDTO {
     private Double montant;
     private TypeRemboursement typeRemboursement;
     private Long creditId;
+
+    public TypeRemboursement getType() {
+        return type;
+    }
+
+    public void setType(TypeRemboursement type) {
+        this.type = type;
+    }
 }
