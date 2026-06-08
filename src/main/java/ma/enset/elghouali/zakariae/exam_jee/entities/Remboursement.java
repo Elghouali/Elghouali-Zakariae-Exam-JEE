@@ -17,6 +17,6 @@ public class Remboursement {
     @Enumerated(EnumType.STRING)
     private TypeRemboursement type;
 
-    @ManyToMany
+    @ManyToOne
     private Credit credit;
 }

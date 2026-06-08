@@ -23,7 +23,7 @@ public class Credit {
     private Integer dureeRemboursement;
     private Double tauxInteret;
 
-    @ManyToMany
+    @ManyToOne
     private Client client;
 
     @OneToMany(mappedBy = "credit", fetch = FetchType.LAZY)
