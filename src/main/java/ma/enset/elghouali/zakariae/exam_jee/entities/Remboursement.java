@@ -3,7 +3,7 @@ package ma.enset.elghouali.zakariae.exam_jee.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import ma.enset.elghouali.zakariae.exam_jee.enums.TypeRemboursement;
-import ma.enset.elghouali.zakariae.examjee.enums.TypeRemboursement;
+import ma.enset.elghouali.zakariae.exam_jee.enums.TypeRemboursement;
 import java.time.LocalDate;
 
 @Entity
